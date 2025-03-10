@@ -1,0 +1,40 @@
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+
+        # def f(ind):
+        #     if ind >= len(cost):
+        #         return 0
+        #     return cost[ind] + min(f(ind+1),f(ind+2))
+        
+        # return min(f(0),f(1))
+
+        # def f(ind,dp):
+        #     if ind>=len(cost):
+        #         return 0
+        #     if dp[ind]!=-1:
+        #         return dp[ind]
+        #     dp[ind] = cost[ind] + min(f(ind+1,dp),f(ind+2,dp))
+        #     return dp[ind]
+        # dp = [-1]*(len(cost))
+        # return min(f(0,dp),f(1,dp))
+
+        
+        # n = len(cost)
+        # dp = [0]*(n+1)
+
+        # for i in range(2,n+1):
+
+        #     dp[i] = min(dp[i-1]+cost[i-1],dp[i-2]+cost[i-2])
+        
+        # return dp[n]
+
+
+        n = len(cost)
+
+        prev2,prev1 = 0,0
+
+        for i in range(2,n+1):
+            curr = min(prev1+cost[i-1],prev2+cost[i-2])
+            prev2,prev1 = prev1,curr
+
+        return prev1        
