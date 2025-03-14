@@ -1,0 +1,49 @@
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        
+        # def f(i,j):
+        #     if i == m-1 and j == n-1:
+        #         return 1
+        #     if i >= m or j >= n :
+        #         return 0
+        #     right = f(i+1,j)
+        #     down = f(i,j+1)
+        #     return right+down
+        # return f(0,0)
+
+        # def f(i,j,dp):
+        #     if i == m-1 and j == n-1:
+        #         return 1
+        #     if i >= m or j >= n :
+        #         return 0
+        #     if dp[i][j] != -1:
+        #         return dp[i][j]
+        #     right = f(i+1,j,dp)
+        #     down = f(i,j+1,dp)
+        #     dp[i][j] =  right+down
+        #     return dp[i][j]
+        # dp = [[-1 for _ in range(n)] for _ in range(m)]
+        # return f(0,0,dp)
+
+
+        
+        dp = [[-1 for _ in range(n)]for _ in range(m)]
+        for i in range(m):
+            for j in range(n):
+                if i == 0 and j == 0:
+                    dp[i][j] = 1
+                    continue
+                up = 0
+                left = 0
+                if i > 0:
+                    up = dp[i-1][j]
+                if j > 0:
+                    left = dp[i][j-1]
+                dp[i][j] = up + left
+        return dp[m-1][n-1]
+        
+                
+
+
+
+        
