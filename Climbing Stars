@@ -1,0 +1,56 @@
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        
+        # def f(ind):
+        #     if ind == 0:
+        #         return 1
+        #     if ind == 1:
+        #         return 1
+        #     left = f(ind-1)
+        #     right = f(ind-2)
+
+        #     return left+right
+        # return f(n)
+
+        # def f(ind,dp):
+        #     if ind == 0:
+        #         return 1
+        #     if ind == 1:
+        #         return 1
+        #     if dp[ind]!= -1:
+        #         return dp[ind]
+        #     left = f(ind-1,dp)
+        #     right = f(ind-2,dp)
+
+        #     dp[ind] =  left+right
+
+        #     return dp[ind]
+        # dp = [-1]*(n+1)
+        # return f(n,dp)
+
+        # if n <= 2 :
+        #     return n
+    
+        # dp = [0]*(n+1)
+        # dp[1] = 1
+        # dp[2] = 2
+
+        # for ind in range(3,n+1):
+        #     dp[ind] = dp[ind-1]+dp[ind-2]
+        
+        # return dp[n]
+
+
+
+
+        if n <= 2 :
+            return n
+
+        prev1 = 1
+        prev2 = 2
+
+        for ind in range(3,n+1):
+            curr = prev2+prev1
+            prev1,prev2 = prev2,curr
+        
+        return prev2
