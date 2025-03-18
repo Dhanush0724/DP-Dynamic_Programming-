@@ -1,0 +1,51 @@
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        
+        # def f(ind,T):
+        #     if ind == 0:
+        #         if T%coins[ind] == 0:
+        #             return T//coins[ind]
+        #         return float('inf')
+        #     nottake = 0 + f(ind-1,T)
+        #     take = float('inf')
+        #     if coins[ind] <= T:
+        #         take = 1 + f(ind,T-coins[ind])
+            
+        #     return min(take,nottake)
+        # res = f(len(coins)-1,amount)
+        # return res if res != float('inf') else -1
+                
+        
+        # def f(ind,T,dp):
+        #     if ind == 0:
+        #         if T%coins[ind] == 0:
+        #             return T//coins[ind]
+        #         return float('inf')
+        #     if dp[ind][T] != -1 :
+        #         return dp[ind][T]
+        #     nottake = 0 + f(ind-1,T,dp)
+        #     take = float('inf')
+        #     if coins[ind] <= T:
+        #         take = 1 + f(ind,T-coins[ind],dp)
+        #     dp[ind][T] = min(take,nottake)
+        #     return dp[ind][T]
+        # dp = [[-1 for _ in range(amount+1)] for _ in range(len(coins))]
+        # res = f(len(coins)-1,amount,dp)
+        # return res if res != float('inf') else -1
+
+        n = len(coins)
+        dp = [[float('inf') for _ in range(amount+1)] for _ in range(n)]
+
+        for T in range(amount+1):
+            if T%coins[0] == 0 :
+                dp[0][T] = T//coins[0]
+        
+        for i in range(1,n):
+            for T in range(amount+1):
+                notake = dp[i-1][T]
+                take = float('inf')
+                if coins[i]<=T:
+                    take = 1 + dp[i][T-coins[i]]
+                dp[i][T] = min(take,notake)
+
+        return dp[n - 1][amount] if dp[n - 1][amount] != float('inf') else -1
