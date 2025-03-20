@@ -1,0 +1,53 @@
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+
+        # n = len(grid)
+        # m = len(grid[0])
+        # def f(i,j):
+        #     if i == n-1 and j == m-1 :
+        #         return grid[i][j]
+        #     if i >= n or j >= m:
+        #         return float('inf')
+            
+        #     down = grid[i][j] + f(i+1,j)
+        #     right = grid[i][j] + f(i,j+1)
+
+        #     return min(down,right)
+        
+        # return f(0,0)
+
+        # n = len(grid)
+        # m = len(grid[0])
+        # def f(i,j,dp):
+        #     if i == n-1 and j == m-1 :
+        #         return grid[i][j]
+        #     if i >= n or j >= m:
+        #         return float('inf')
+        #     if dp[i][j] != -1:
+        #         return dp[i][j]
+        #     down = grid[i][j] + f(i+1,j,dp)
+        #     right = grid[i][j] + f(i,j+1,dp)
+
+        #     dp[i][j] =  min(down,right)
+        #     return dp[i][j]
+        # dp = [[-1 for _ in range(m)] for _ in range(n)]
+        # return f(0,0,dp)
+
+        n = len(grid)
+        m = len(grid[0])
+        prev = [0]*m
+        for i in range(n):
+            curr = [0]*m
+            for j in range(m):
+                if i == 0 and j == 0:
+                    curr[j] = grid[0][0]
+                else :
+                    up = grid[i][j] + prev[j] if i >0 else float('inf')
+                    left = grid[i][j] + curr[j-1] if j>0 else float('inf')
+                    curr[j] = min(up,left)
+            prev = curr
+        return prev[m-1]
+
+
+
+        
