@@ -1,0 +1,70 @@
+class Solution:
+    def maxProfit(self, k: int, prices: List[int]) -> int:
+
+        # def f(ind,buy,cap):
+
+        #     if ind == len(prices):
+        #         return 0
+        #     if cap == 0:
+        #         return 0
+        #     profit = 0
+        #     if buy == 1 :
+        #         profit = max(-prices[ind]+ f(ind+1,0,cap),0+f(ind+1,1,cap))
+        #     else :
+        #         profit = max(prices[ind]+f(ind+1,1,cap-1),0+f(ind+1,0,cap))
+        #     return profit
+        
+        # return f(0,1,k+1)
+
+
+        # def f(ind,buy,cap,dp):
+
+        #     if ind == len(prices) or cap == 0:
+        #         return 0
+            
+        #     if dp[ind][buy][cap] != -1:
+        #         return dp[ind][buy][cap]
+            
+        #     if buy == 1 :
+        #         profit = max(-prices[ind]+ f(ind+1,0,cap,dp),0+f(ind+1,1,cap,dp))
+        #     else :
+        #         profit = max(prices[ind]+f(ind+1,1,cap-1,dp),0+f(ind+1,0,cap,dp))
+        #     dp[ind][buy][cap] = profit
+        #     return dp[ind][buy][cap]
+        
+        # dp = [[[-1 for _ in range(k+1)] for _ in range(2)] for _ in range(len(prices))]
+        # return f(0,1,k,dp)
+
+        # n = len(prices)
+
+        # dp = [[[0]*(k+1) for _ in range(2)] for _ in range(n+1)]
+
+        # for ind in range(n-1,-1,-1):
+        #     for buy in range(2):
+        #         for cap in range(1,k+1):
+        #             if buy :
+        #                 profit = max(-prices[ind]+dp[ind+1][0][cap],dp[ind+1][1][cap])
+        #             else :
+        #                 profit = max(prices[ind]+dp[ind+1][1][cap-1],dp[ind+1][0][cap])
+        #             dp[ind][buy][cap] = profit
+        
+        # return dp[0][1][k]
+
+
+        n = len(prices)
+
+        next = [[0]*(k+1) for _ in range(2)]
+        curr = [[0]*(k+1) for _ in range(2)]
+
+        for ind in range(n-1,-1,-1):
+            for buy in range(2):
+                for cap in range(1,k+1):
+                    if buy :
+                        profit = max(-prices[ind]+next[0][cap],next[1][cap])
+                    else :
+                        profit = max(prices[ind]+next[1][cap-1],next[0][cap])
+                    curr[buy][cap] = profit
+            next = [row[:] for row in curr]
+        
+        return next[1][k]
+        
