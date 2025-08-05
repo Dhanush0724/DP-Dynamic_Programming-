@@ -1,0 +1,14 @@
+class Solution:
+    def numRollsToTarget(self, n: int, k: int, target: int) -> int:
+        MOD = 10**9+7
+        @lru_cache(None)
+        def f(n,target):
+            if n == 0:
+                return 1 if target == 0 else 0
+            
+            total = 0
+            for face in range(1,k+1):
+                if target - face >= 0:
+                    total = (total + f(n - 1, target - face)) % MOD
+            return total
+        return f(n,target)        
